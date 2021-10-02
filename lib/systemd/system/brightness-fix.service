@@ -1,0 +1,10 @@
+[Unit]
+Description=jasmine: Fix display brightness permissions on stock vendor
+
+[Service]
+User=root
+ExecStart=chmod 777 /sys/class/leds/lcd-backlight/brightness
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
