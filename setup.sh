@@ -8,7 +8,7 @@ echo "Downloading fixes..."
 
 sudo mkdir /lib/systemd/system/bluebinder.service.d/
 
-sudo wget https://raw.githubusercontent.com/Droidian-Mi-A2-6X/droidian-tweaks/master/lib/systemd/system/bluebinder.service.d/90-jasmine.conf -O /lib/systemd/system/bluebinder.service.d/90-jasmine.conf && sudo chmod 0644 /lib/systemd/bluebinder.service.d/90-jasmine.conf
+sudo wget https://raw.githubusercontent.com/Droidian-Mi-A2-6X/droidian-tweaks/master/lib/systemd/system/bluebinder.service.d/90-jasmine.conf -O /lib/systemd/system/bluebinder.service.d/90-jasmine.conf && sudo chmod 0644 /lib/systemd/system/bluebinder.service.d/90-jasmine.conf
 
 sudo wget https://raw.githubusercontent.com/Droidian-Mi-A2-6X/droidian-tweaks/master/lib/systemd/system/brightness-fix.service -O /lib/systemd/system/brightness-fix.service && sudo chmod 0644 /lib/systemd/system/brightness-fix.service
 
