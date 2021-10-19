@@ -10,4 +10,4 @@ The `setup.sh` script additionally installs and enables flathub and kdeapps flat
 
 `wget https://github.com/Droidian-Mi-A2-6X/droidian-tweaks/raw/master/setup.sh && chmod +x setup.sh && ./setup.sh`
 
-For waydroid (work in progress!) run `wget https://github.com/Droidian-Mi-A2-6X/jasmine-tweaks/blob/master/waydroid-setup.sh && chmod +x waydroid-setup.sh && ./waydroid-setup.sh`
+For waydroid (work in progress!) run `wget https://github.com/Droidian-Mi-A2-6X/droidian-tweaks/raw/master/waydroid-setup.sh && chmod +x waydroid-setup.sh && ./waydroid-setup.sh`
