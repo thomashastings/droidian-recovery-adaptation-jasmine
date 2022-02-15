@@ -1,30 +1,27 @@
-#!/bin/bash
+# Droidian Adaptation for the Xiaomi Mi A2 (jasmine_sprout)
+# Flashing based on: https://github.com/droidian-releng/android-recovery-flashing-template
 
-echo "Updating system..."
+# Contains fixes for:
+# 1. Brightness
+# 2. Bluetooth
+# 3. Scaling
 
-sudo apt update && sudo apt dist-upgrade -y
+# https://droidian.org
 
-echo "Downloading fixes..."
+OUTFD=/proc/self/fd/$1;
+VENDOR_DEVICE_PROP=`grep ro.product.vendor.device /vendor/build.prop | cut -d "=" -f 2 | awk '{print tolower($0)}'`;
 
-sudo mkdir /lib/systemd/system/bluebinder.service.d/
+# ui_print <text>
+ui_print() { echo -e "ui_print $1\nui_print" > $OUTFD; }
 
-sudo wget https://raw.githubusercontent.com/Droidian-Mi-A2-6X/droidian-tweaks/master/lib/systemd/system/bluebinder.service.d/90-jasmine.conf -O /lib/systemd/system/bluebinder.service.d/90-jasmine.conf && sudo chmod 0644 /lib/systemd/system/bluebinder.service.d/90-jasmine.conf
+mkdir /r;
 
-sudo wget https://raw.githubusercontent.com/Droidian-Mi-A2-6X/droidian-tweaks/master/lib/systemd/system/brightness-fix.service -O /lib/systemd/system/brightness-fix.service && sudo chmod 0644 /lib/systemd/system/brightness-fix.service
+# mount droidian rootfs
+mount /data/rootfs.img /r;
 
-sudo systemctl daemon-reload && sudo systemctl enable bluebinder.service && sudo systemctl enable brightness-fix.service && sudo systemctl start brightness-fix.service
+# Apply bluetooth fix
+ui_print "Applying device adaptations..."
+cp -r data/* /r/
 
-sudo rm /usr/share/phosh/phoc.ini && sudo wget https://github.com/Droidian-Mi-A2-6X/droidian-tweaks/raw/master/usr/share/phosh/phoc.ini -O /usr/share/phosh/phoc.ini && sudo chmod 0644 /usr/share/phosh/phoc.ini
-
-echo "Setting up flatpak repo(s) for convenience..."
-
-flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo && flatpak remote-add --user --if-not-exists kdeapps http://distribute.kde.org/kdeapps.flatpakrepo
-
-echo "Setting up alias for bootctl..."
-
-echo 'alias switch-a="unset LD_PRELOAD; unset LD_LIBRARY_PATH; /system/bin/bootctl set-active-boot-slot 0"' >> ~/.bashrc
-echo 'alias switch-b="unset LD_PRELOAD; unset LD_LIBRARY_PATH; /system/bin/bootctl set-active-boot-slot 1"' >> ~/.bashrc
-
-echo "Rebooting now."
-
-sudo systemctl reboot
+# umount rootfs
+umount /r;
