@@ -1,0 +1,8 @@
+#!/bin/bash
+systemctl daemon-reload
+systemctl enable bluebinder.service 
+systemctl enable brightness-fix.service
+systemctl start brightness-fix.service
+echo 255 > /sys/class/leds/lcd-backlight/brightness
+rm -f /etc/rc.local
+exit 0
