@@ -19,9 +19,16 @@ mkdir /r;
 # mount droidian rootfs
 mount /data/rootfs.img /r;
 
-# Apply bluetooth fix
-ui_print "Applying device adaptations..."
-cp -r data/* /r/
+# Copy files
+ui_print "Copying device adaptation files...";
+cp -r data/* /r/;
+
+# Do "chmod a+c /etc/rc.local" for first boot
+chroot /r /bin/bash /local/bin/first-boot.sh
+
+# Add boot slot switching to ~/.bashrc
+echo 'alias switch-a="unset LD_PRELOAD; unset LD_LIBRARY_PATH; /system/bin/bootctl set-active-boot-slot 0"' >> /r/home/droidian/.bashrc
+echo 'alias switch-b="unset LD_PRELOAD; unset LD_LIBRARY_PATH; /system/bin/bootctl set-active-boot-slot 1"' >> /r/home/droidian/.bashrc
 
 # umount rootfs
 umount /r;
